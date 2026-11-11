@@ -61,9 +61,11 @@ netlify.toml               # header สำหรับ Netlify
 ### เปิด GitHub Pages (ดูคลัง / preview)
 
 1. Repo → **Settings → Pages**
-2. Source = **GitHub Actions**
-3. Push `main` ให้ workflow `Deploy GitHub Pages` รัน
+2. Source = **Deploy from a branch** → Branch `main` / folder `/ (root)`
+3. Save แล้วรอ deploy
 4. URL ประมาณ: `https://sebbersky.github.io/trueid-confluence-source/`
+
+> ถ้าต้องการ GitHub Actions deploy แทน branch deploy: เพิ่ม workflow ภายหลังหลัง `gh auth refresh -s workflow` (token ปัจจุบันไม่มี `workflow` scope)
 
 ### เปิด Cloudflare Pages (สำหรับ embed จริง)
 
