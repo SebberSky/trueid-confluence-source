@@ -1,0 +1,22 @@
+{
+  "site": {
+    "name": "TrueID Confluence Source",
+    "description": "Static HTML pages for embedding on Confluence"
+  },
+  "pages": [
+    {
+      "slug": "welcome",
+      "title": "Welcome",
+      "description": "ตัวอย่างหน้า HTML สำหรับฝังบน Confluence",
+      "tags": ["example"],
+      "embedHeight": 520
+    },
+    {
+      "slug": "release-notes-template",
+      "title": "Release notes template",
+      "description": "เทมเพลต release notes ที่จัด layout สำหรับ iframe",
+      "tags": ["template", "release"],
+      "embedHeight": 640
+    }
+  ]
+}

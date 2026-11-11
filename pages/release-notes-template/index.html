@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Release notes template — TrueID Confluence Source</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;650&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../assets/site.css" />
+    <style>
+      .rn-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+      }
+      .rn-table th,
+      .rn-table td {
+        border: 1px solid var(--border);
+        padding: 0.65rem 0.75rem;
+        text-align: left;
+        vertical-align: top;
+      }
+      .rn-table th {
+        background: #121a26;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      .rn-table tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .badge {
+        display: inline-block;
+        padding: 0.1rem 0.45rem;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 650;
+      }
+      .badge.new {
+        background: rgba(61, 214, 140, 0.15);
+        color: #3dd68c;
+      }
+      .badge.fix {
+        background: rgba(61, 139, 253, 0.15);
+        color: #3d8bfd;
+      }
+      .badge.break {
+        background: rgba(255, 107, 107, 0.15);
+        color: #ff8f8f;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell content-page">
+      <header class="topbar" data-hide-in-embed>
+        <a class="brand" href="../../">← กลับคลัง</a>
+        <span class="muted">pages/release-notes-template</span>
+      </header>
+
+      <h1>Release notes — x.y.z</h1>
+      <p class="lead">
+        แก้ข้อความด้านล่างให้ตรง release แล้วฝังหน้านี้บน Confluence
+      </p>
+
+      <table class="rn-table">
+        <thead>
+          <tr>
+            <th style="width: 7rem">Type</th>
+            <th>Change</th>
+            <th style="width: 10rem">Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge new">New</span></td>
+            <td>เพิ่มฟีเจอร์ตัวอย่าง A</td>
+            <td>Squad X</td>
+          </tr>
+          <tr>
+            <td><span class="badge fix">Fix</span></td>
+            <td>แก้บั๊กตัวอย่าง B บนหน้า Home</td>
+            <td>Squad Y</td>
+          </tr>
+          <tr>
+            <td><span class="badge break">Breaking</span></td>
+            <td>เปลี่ยน API / contract ที่ทีมอื่นต้องรู้</td>
+            <td>Platform</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script src="../../assets/embed.js"></script>
+  </body>
+</html>

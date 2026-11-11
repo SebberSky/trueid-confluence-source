@@ -1,0 +1,4 @@
+/*
+  Content-Security-Policy: frame-ancestors *
+  Referrer-Policy: no-referrer-when-downgrade
+  X-Content-Type-Options: nosniff
