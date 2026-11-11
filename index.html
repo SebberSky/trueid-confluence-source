@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TrueID Confluence Source</title>
+    <meta
+      name="description"
+      content="เก็บและแสดง HTML สำหรับ embed บน Confluence"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600;650&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/site.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar" data-hide-in-embed>
+        <a class="brand" href="./">TrueID Confluence Source</a>
+        <span class="muted">HTML host สำหรับ Confluence embed</span>
+      </header>
+
+      <section class="hero">
+        <h1>คลังหน้า HTML สำหรับฝังบน Confluence</h1>
+        <p>
+          เพิ่มไฟล์ใน <code>pages/&lt;slug&gt;/index.html</code> แล้วลงทะเบียนใน
+          <code>manifest.json</code> — กดคัดลอก iframe ไปวางใน HTML macro /
+          iframe macro บน Confluence
+        </p>
+      </section>
+
+      <div id="page-list" class="grid" aria-live="polite"></div>
+
+      <section class="panel" data-hide-in-embed>
+        <h2>วิธีฝังบน Confluence</h2>
+        <ol>
+          <li>เปิดหน้าจากรายการด้านบน → กด <strong>คัดลอก iframe</strong></li>
+          <li>
+            บน Confluence: Insert → HTML macro (หรือ Iframe macro ถ้ามี) แล้ววางโค้ด
+          </li>
+          <li>
+            ถ้าขึ้น “refused to connect” แปลว่าโฮสต์บล็อก frame — ใช้ Cloudflare
+            Pages / Netlify จาก repo นี้ (มี <code>_headers</code> ให้อยู่แล้ว)
+          </li>
+        </ol>
+        <pre class="codeblock" id="sample-iframe">กำลังสร้างตัวอย่าง iframe…</pre>
+      </section>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="assets/embed.js"></script>
+    <script src="assets/catalog.js"></script>
+    <script>
+      (function () {
+        var base = new URL(".", location.href).href.replace(/\/$/, "");
+        var sample = document.getElementById("sample-iframe");
+        if (!sample) return;
+        sample.textContent =
+          '<iframe\n' +
+          '  src="' +
+          base +
+          '/pages/welcome/?embed=1"\n' +
+          '  width="100%"\n' +
+          '  height="520"\n' +
+          '  style="border:0;border-radius:8px;"\n' +
+          '  loading="lazy"\n' +
+          "></iframe>";
+      })();
+    </script>
+  </body>
+</html>

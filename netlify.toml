@@ -1,0 +1,10 @@
+[build]
+  publish = "."
+  command = "echo 'static site — no build'"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "frame-ancestors *"
+    Referrer-Policy = "no-referrer-when-downgrade"
+    # Do not set X-Frame-Options — it blocks Confluence iframes.
