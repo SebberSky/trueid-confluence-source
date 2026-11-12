@@ -30,9 +30,7 @@ const upload = multer({
 const PORT = Number(process.env.PORT || 8787);
 const HOST = process.env.HOST || "127.0.0.1";
 const UPLOAD_TOKEN = String(process.env.UPLOAD_TOKEN || "").trim();
-const PUBLIC_BASE_URL = String(process.env.PUBLIC_BASE_URL || "")
-  .trim()
-  .replace(/\/$/, "");
+const SITE_BASE_URL = "https://trueid-confluence-source.signalbay.fyi";
 const GIT_DEPLOY =
   String(process.env.GIT_DEPLOY || "true").toLowerCase() !== "false";
 const GIT_BRANCH = process.env.GIT_BRANCH || "main";
@@ -53,9 +51,7 @@ function requireToken(req, res, next) {
 }
 
 function publicUrlFor(urlPath) {
-  const rel = `/pages/${urlPath}/`;
-  if (!PUBLIC_BASE_URL) return rel;
-  return `${PUBLIC_BASE_URL}${rel}`;
+  return `${SITE_BASE_URL}/pages/${urlPath}/`;
 }
 
 function iframeSnippet(urlPath, height) {
@@ -129,7 +125,7 @@ app.get("/api/health", (_req, res) => {
     ok: true,
     gitDeploy: GIT_DEPLOY,
     tokenConfigured: Boolean(UPLOAD_TOKEN),
-    publicBaseUrl: PUBLIC_BASE_URL || null,
+    publicBaseUrl: SITE_BASE_URL,
   });
 });
 
