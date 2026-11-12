@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Upload Portal — TrueID Confluence Source</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600;650&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/site.css" />
+    <link rel="stylesheet" href="./portal.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a class="brand" href="../">TrueID Confluence Source</a>
+        <span class="muted">Upload portal</span>
+      </header>
+
+      <section class="hero">
+        <h1>อัปโหลด HTML แล้ว publish ทันที</h1>
+        <p>
+          เลือก path ที่ต้องการ → ระบบเช็คชื่อซ้ำ → วางไฟล์ใต้
+          <code>pages/&lt;path&gt;/</code> แล้ว <code>git push</code> ให้ host
+          deploy เอง
+        </p>
+      </section>
+
+      <form id="upload-form" class="portal-form" novalidate>
+        <label class="field">
+          <span>Upload token</span>
+          <input
+            id="uploadToken"
+            name="uploadToken"
+            type="password"
+            autocomplete="off"
+            required
+            placeholder="ค่าจากไฟล์ .env (ไม่ถูกบันทึกใน browser)"
+          />
+        </label>
+
+        <label class="field">
+          <span>URL path</span>
+          <div class="path-row">
+            <span class="path-prefix">/pages/</span>
+            <input
+              id="path"
+              name="path"
+              type="text"
+              required
+              spellcheck="false"
+              autocomplete="off"
+              placeholder="promo-q1 หรือ docs/onboarding"
+            />
+            <span class="path-suffix">/</span>
+          </div>
+          <small id="path-status" class="path-status">กรอก path แล้วระบบจะเช็คชื่อซ้ำ</small>
+        </label>
+
+        <div class="field-grid">
+          <label class="field">
+            <span>Title</span>
+            <input id="title" name="title" type="text" placeholder="ชื่อที่โชว์ในคลัง" />
+          </label>
+          <label class="field">
+            <span>Embed height (px)</span>
+            <input
+              id="embedHeight"
+              name="embedHeight"
+              type="number"
+              min="120"
+              max="4000"
+              value="520"
+            />
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Description</span>
+          <input
+            id="description"
+            name="description"
+            type="text"
+            placeholder="สั้นๆ สำหรับคลังหน้า"
+          />
+        </label>
+
+        <label class="field">
+          <span>Tags (คั่นด้วย comma)</span>
+          <input id="tags" name="tags" type="text" value="uploaded" />
+        </label>
+
+        <label class="field">
+          <span>HTML หลัก (.html → กลายเป็น index.html)</span>
+          <input id="html" name="html" type="file" accept=".html,.htm,text/html" required />
+        </label>
+
+        <label class="field">
+          <span>Resources ไฟล์เดี่ยว (CSS / JS / รูป / ฟอนต์)</span>
+          <input
+            id="resources"
+            name="resources"
+            type="file"
+            multiple
+            accept=".css,.js,.mjs,.png,.jpg,.jpeg,.gif,.webp,.svg,.woff,.woff2,.ttf,.json,.map,.txt"
+          />
+        </label>
+
+        <label class="field">
+          <span>หรืออัปโหลดทั้งโฟลเดอร์ (คง relative path)</span>
+          <input id="resourceFolder" name="resourceFolder" type="file" webkitdirectory multiple />
+          <small class="hint">
+            ไฟล์จะถูกวางตาม relative path จากโฟลเดอร์ที่เลือก เช่น
+            <code>assets/app.css</code> — อ้างอิงแบบ relative จาก HTML
+          </small>
+        </label>
+
+        <div class="actions">
+          <button id="submit-btn" class="btn primary" type="submit" disabled>
+            อัปโหลดและ deploy
+          </button>
+          <a class="btn" href="../">กลับคลังหน้า</a>
+        </div>
+      </form>
+
+      <section id="result" class="panel result-panel" hidden>
+        <h2>สำเร็จ</h2>
+        <p id="result-summary" class="muted"></p>
+        <pre id="result-iframe" class="codeblock"></pre>
+        <div class="actions">
+          <button id="copy-iframe" class="btn primary" type="button">คัดลอก iframe</button>
+          <a id="open-page" class="btn" href="#" target="_blank" rel="noopener">เปิดหน้า</a>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Path ที่มีอยู่แล้ว</h2>
+        <div id="existing-paths" class="path-list muted">ใส่ token แล้วจะโหลดรายการ</div>
+      </section>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="./portal.js"></script>
+  </body>
+</html>
