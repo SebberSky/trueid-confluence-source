@@ -6,6 +6,8 @@
 
 ```text
 index.html                 # คลังหน้า + ปุ่มคัดลอก iframe
+portal/                    # หน้าอัปโหลด HTML + resources
+server/                    # API เช็ค path / อัปโหลด / git deploy
 manifest.json              # รายการหน้าทั้งหมด
 assets/                    # CSS / JS ร่วม
 pages/<slug>/index.html    # เนื้อหาแต่ละหน้า
@@ -13,7 +15,32 @@ _headers                   # อนุญาต frame (Cloudflare / Netlify)
 netlify.toml               # header สำหรับ Netlify
 ```
 
-## เพิ่มหน้าใหม่ (~2 นาที)
+## Upload portal (แนะนำ)
+
+อัปโหลด HTML + resources ผ่านเว็บ แล้วระบบจะ:
+
+1. เช็ค **URL path ห้ามซ้ำ** (เทียบ `manifest.json` + โฟลเดอร์ `pages/`)
+2. วางไฟล์ที่ `pages/<path>/index.html` (+ resources)
+3. อัปเดต `manifest.json`
+4. `git commit` + `git push` → host (GitHub Pages / Cloudflare) deploy เอง
+
+```bash
+cp .env.example .env
+# แก้ UPLOAD_TOKEN และ PUBLIC_BASE_URL ใน .env
+npm install
+npm start
+# เปิด http://127.0.0.1:8787/portal/
+```
+
+ใน portal:
+
+- กรอก **Upload token** (= `UPLOAD_TOKEN`)
+- กรอก **URL path** เช่น `promo-q1` → ได้ `/pages/promo-q1/`
+- แนบ HTML หลัก + resources (ถ้ามี) → กดอัปโหลด
+
+ตั้ง `GIT_DEPLOY=false` ใน `.env` ถ้าอยากทดลองเขียนไฟล์โดยไม่ push
+
+## เพิ่มหน้าใหม่ด้วยมือ (~2 นาที)
 
 1. สร้างโฟลเดอร์ `pages/<slug>/index.html`
 2. ลิงก์ CSS/JS แบบ relative จากหน้าลูก:
