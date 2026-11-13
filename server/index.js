@@ -29,7 +29,6 @@ const upload = multer({
 
 const PORT = Number(process.env.PORT || 8787);
 const HOST = process.env.HOST || "127.0.0.1";
-const UPLOAD_TOKEN = String(process.env.UPLOAD_TOKEN || "").trim();
 const SITE_BASE_URL = "https://trueid-confluence-source.signalbay.fyi";
 const GIT_DEPLOY =
   String(process.env.GIT_DEPLOY || "true").toLowerCase() !== "false";
@@ -37,16 +36,6 @@ const GIT_BRANCH = process.env.GIT_BRANCH || "main";
 const GIT_REMOTE = process.env.GIT_REMOTE || "origin";
 
 function requireToken(req, res, next) {
-  if (!UPLOAD_TOKEN) {
-    return res.status(503).json({
-      ok: false,
-      error: "ตั้ง UPLOAD_TOKEN ในไฟล์ .env ก่อนใช้งาน portal",
-    });
-  }
-  const provided = req.get("x-upload-token") || "";
-  if (String(provided) !== UPLOAD_TOKEN) {
-    return res.status(401).json({ ok: false, error: "upload token ไม่ถูกต้อง" });
-  }
   return next();
 }
 
@@ -124,7 +113,6 @@ app.get("/api/health", (_req, res) => {
   res.json({
     ok: true,
     gitDeploy: GIT_DEPLOY,
-    tokenConfigured: Boolean(UPLOAD_TOKEN),
     publicBaseUrl: SITE_BASE_URL,
   });
 });
@@ -159,18 +147,7 @@ app.get("/api/check-path", requireToken, (req, res) => {
 
 app.post(
   "/api/upload",
-  (req, res, next) => {
-    if (!UPLOAD_TOKEN) {
-      return res.status(503).json({
-        ok: false,
-        error: "ตั้ง UPLOAD_TOKEN ในไฟล์ .env ก่อนใช้งาน portal",
-      });
-    }
-    if (req.get("x-upload-token") !== UPLOAD_TOKEN) {
-      return res.status(401).json({ ok: false, error: "upload token ไม่ถูกต้อง" });
-    }
-    return next();
-  },
+  (_req, _res, next) => next(),
   upload.fields([
     { name: "html", maxCount: 1 },
     { name: "resources", maxCount: 39 },
@@ -359,11 +336,6 @@ app.get("/index.html", (_req, res) => {
   res.sendFile(path.join(repoRoot, "index.html"));
 });
 
-if (!UPLOAD_TOKEN) {
-  console.warn(
-    "[portal] UPLOAD_TOKEN ยังไม่ถูกตั้ง — คัดลอก .env.example เป็น .env ก่อน"
-  );
-}
 
 app.listen(PORT, HOST, () => {
   console.log(`[portal] http://${HOST}:${PORT}/portal/`);

@@ -26,7 +26,6 @@ netlify.toml               # header สำหรับ Netlify
 
 ```bash
 cp .env.example .env
-# แก้ UPLOAD_TOKEN ใน .env
 npm install
 npm start
 # เปิด http://127.0.0.1:8787/portal/
@@ -34,7 +33,6 @@ npm start
 
 ใน portal:
 
-- กรอก **Upload token** (= `UPLOAD_TOKEN`)
 - กรอก **URL path** เช่น `promo-q1` → ได้  
   `https://trueid-confluence-source.signalbay.fyi/pages/promo-q1/`
 - แนบ HTML หลัก + resources (ถ้ามี) → กดอัปโหลด

@@ -1,6 +1,5 @@
 (function () {
   const form = document.getElementById("upload-form");
-  const tokenInput = document.getElementById("uploadToken");
   const pathInput = document.getElementById("path");
   const pathStatus = document.getElementById("path-status");
   const submitBtn = document.getElementById("submit-btn");
@@ -25,24 +24,19 @@
     }, 1600);
   }
 
-  function tokenHeaders() {
-    return { "X-Upload-Token": tokenInput.value.trim() };
-  }
-
   function setPathStatus(kind, message) {
     pathStatus.className = "path-status " + kind;
     pathStatus.textContent = message;
   }
 
   function updateSubmitState() {
-    const hasToken = Boolean(tokenInput.value.trim());
     const hasPath = Boolean(pathInput.value.trim());
     const hasHtml = Boolean(form.html.files && form.html.files.length);
-    submitBtn.disabled = !(hasToken && hasPath && hasHtml && pathAvailable);
+    submitBtn.disabled = !(hasPath && hasHtml && pathAvailable);
   }
 
   async function apiGet(url) {
-    const res = await fetch(url, { headers: tokenHeaders(), cache: "no-store" });
+    const res = await fetch(url, { cache: "no-store" });
     const data = await res.json().catch(function () {
       return { ok: false, error: "invalid JSON" };
     });
@@ -53,10 +47,6 @@
   }
 
   async function refreshExistingPaths() {
-    if (!tokenInput.value.trim()) {
-      existingEl.textContent = "ใส่ token แล้วจะโหลดรายการ";
-      return;
-    }
     try {
       const data = await apiGet("/api/paths");
       existingEl.replaceChildren();
@@ -77,12 +67,6 @@
 
   async function checkPath() {
     const value = pathInput.value.trim();
-    if (!tokenInput.value.trim()) {
-      pathAvailable = false;
-      setPathStatus("pending", "ใส่ upload token ก่อนเพื่อเช็คชื่อซ้ำ");
-      updateSubmitState();
-      return;
-    }
     if (!value) {
       pathAvailable = false;
       setPathStatus("pending", "กรอก path แล้วระบบจะเช็คชื่อซ้ำ");
@@ -113,11 +97,6 @@
     checkTimer = window.setTimeout(checkPath, 280);
   }
 
-  tokenInput.addEventListener("input", function () {
-    updateSubmitState();
-    scheduleCheck();
-    refreshExistingPaths();
-  });
   pathInput.addEventListener("input", function () {
     pathAvailable = false;
     updateSubmitState();
@@ -163,7 +142,6 @@
     try {
       const res = await fetch("/api/upload", {
         method: "POST",
-        headers: tokenHeaders(),
         body: body,
       });
       const data = await res.json().catch(function () {
