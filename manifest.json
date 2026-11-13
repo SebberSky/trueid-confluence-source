@@ -17,6 +17,13 @@
       "description": "เทมเพลต release notes ที่จัด layout สำหรับ iframe",
       "tags": ["template", "release"],
       "embedHeight": 640
+    },
+    {
+      "slug": "truecloud-api-docs",
+      "title": "True Cloud API Reference",
+      "description": "เอกสารอ้างอิง True Cloud API แบบ interactive",
+      "tags": ["api", "documentation", "truecloud"],
+      "embedHeight": 900
     }
   ]
 }

@@ -1,0 +1,1985 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "True Cloud API",
+    "version": "1.0.0",
+    "description": "Generated from TrueIDCloudV3 iOS sources"
+  },
+  "servers": [
+    {
+      "url": "https://drive-customer-api.trueid.net/drive/",
+      "description": "tc-customer"
+    },
+    {
+      "url": "https://cloudshare.trueid.net/public-api/",
+      "description": "tc-share"
+    }
+  ],
+  "paths": {
+    "/v1/users/{ssoId}/storage": {
+      "get": {
+        "operationId": "getStorageInfo",
+        "summary": "Get Storage Info",
+        "description": "Get quota, usage, root folder, and migration status.",
+        "tags": [
+          "Storage"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorageInfoResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/folders/{parentId}": {
+      "get": {
+        "operationId": "getStorageObjects",
+        "summary": "Get Storage Objects",
+        "description": "List objects inside a folder.",
+        "tags": [
+          "Storage"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorageObjectListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/files": {
+      "get": {
+        "operationId": "getRecentUploadObjects",
+        "summary": "Get Recent Upload Objects",
+        "description": "List recent uploads.",
+        "tags": [
+          "Storage"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorageObjectListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/objects/{objectId}": {
+      "get": {
+        "operationId": "getAudioObject",
+        "summary": "Get Audio Object",
+        "description": "Get a media object, optionally with pre-signed URL.",
+        "tags": [
+          "Storage"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaObjectResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/file": {
+      "post": {
+        "operationId": "initialUpload",
+        "summary": "Initial Upload",
+        "description": "Create upload metadata. Binary bytes are uploaded via AWS SDK after STS.",
+        "tags": [
+          "File"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InitialUploadResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/file/{objectId}": {
+      "post": {
+        "operationId": "retryUpload",
+        "summary": "Retry Upload",
+        "description": "Retry an upload session. Empty JSON body.",
+        "tags": [
+          "File"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InitialUploadResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/files/{objectId}": {
+      "patch": {
+        "operationId": "completeReUpload",
+        "summary": "Complete Re Upload",
+        "description": "Complete cover-image re-upload (PhotoEditorAPI).",
+        "tags": [
+          "File"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorageObjectResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteFile",
+        "summary": "Delete File",
+        "description": "Delete a file or object.",
+        "tags": [
+          "File"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorageObjectResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/folder": {
+      "post": {
+        "operationId": "createFolder",
+        "summary": "Create Folder",
+        "description": "Create a folder.",
+        "tags": [
+          "File"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorageObjectResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/files/{objectId}/rename": {
+      "patch": {
+        "operationId": "renameFile",
+        "summary": "Rename File",
+        "description": "Rename a file or folder.",
+        "tags": [
+          "File"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorageObjectResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/objects/move": {
+      "post": {
+        "operationId": "moveObjects",
+        "summary": "Move Objects",
+        "description": "Move objects to another parent folder.",
+        "tags": [
+          "File"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MoveObjectResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/objects/copy": {
+      "post": {
+        "operationId": "copyObjects",
+        "summary": "Copy Objects",
+        "description": "Copy objects to another parent folder.",
+        "tags": [
+          "File"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CopyObjectResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/objects/trash/move": {
+      "post": {
+        "operationId": "removeObjectsToTrash",
+        "summary": "Remove Objects To Trash",
+        "description": "Move objects into trash.",
+        "tags": [
+          "Trash"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RemoveObjectsToTrashResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/objects/trash": {
+      "post": {
+        "operationId": "moveObjectsToTrash",
+        "summary": "Move Objects To Trash",
+        "description": "Alternate trash move using a raw object-id array. Unused in current repositories.",
+        "tags": [
+          "Trash"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RemoveObjectsToTrashResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getTrashObjects",
+        "summary": "Get Trash Objects",
+        "description": "List trash objects.",
+        "tags": [
+          "Trash"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrashObjectListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/objects/trash/restore": {
+      "post": {
+        "operationId": "restoreObjectsFromTrash",
+        "summary": "Restore Objects From Trash",
+        "description": "Restore objects from trash.",
+        "tags": [
+          "Trash"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestoreObjectsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/objects/trash/delete": {
+      "post": {
+        "operationId": "deleteObjectsFromTrash",
+        "summary": "Delete Objects From Trash",
+        "description": "Permanently delete objects from trash.",
+        "tags": [
+          "Trash"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteObjectsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/objects/trash/empty": {
+      "post": {
+        "operationId": "emptyTrash",
+        "summary": "Empty Trash",
+        "description": "Empty trash.",
+        "tags": [
+          "Trash"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteObjectsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/files/{objectId}/share": {
+      "post": {
+        "operationId": "shareFile",
+        "summary": "Share File",
+        "description": "Create a share link for a file.",
+        "tags": [
+          "Share"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShareFileResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getShareFileConfig",
+        "summary": "Get Share File Config",
+        "description": "Get share configuration.",
+        "tags": [
+          "Share"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShareFileResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateShareFileConfig",
+        "summary": "Update Share File Config",
+        "description": "Update share password, expiry, or privacy.",
+        "tags": [
+          "Share"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShareFileResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/shared-objects/{sharedObjectId}": {
+      "get": {
+        "operationId": "getSharedObject",
+        "summary": "Get Shared Object",
+        "description": "Fetch a shared object from the public share API.",
+        "tags": [
+          "Share"
+        ],
+        "x-server": "share",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SharedObjectResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/auth/shared-objects/login": {
+      "post": {
+        "operationId": "loginSharedObject",
+        "summary": "Login Shared Object",
+        "description": "Login to a password-protected shared object. No Bearer header.",
+        "tags": [
+          "Share"
+        ],
+        "x-server": "share",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SharedObjectLoginResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/objects/search": {
+      "get": {
+        "operationId": "getSearchStorageObjects",
+        "summary": "Get Search Storage Objects",
+        "description": "Search objects in storage.",
+        "tags": [
+          "Search"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorageObjectListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/files/search": {
+      "get": {
+        "operationId": "getSearchRecentUploadObjects",
+        "summary": "Get Search Recent Upload Objects",
+        "description": "Search recent uploads.",
+        "tags": [
+          "Search"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorageObjectListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/contact": {
+      "get": {
+        "operationId": "getContactLastUpdate",
+        "summary": "Get Contact Last Update",
+        "description": "Get contact backup last-update object.",
+        "tags": [
+          "Contact"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorageObjectResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/sts": {
+      "post": {
+        "operationId": "getSecureTokenService",
+        "summary": "Get Secure Token Service",
+        "description": "Return AWS STS credentials used to configure AWSS3TransferUtility. Called by native code, not by the SDK.",
+        "tags": [
+          "STS"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SecureTokenServiceResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/{ssoId}/migration": {
+      "post": {
+        "operationId": "migrateData",
+        "summary": "Migrate Data",
+        "description": "Trigger storage migration.",
+        "tags": [
+          "Migration"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorageMigrationStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateMigrationStatus",
+        "summary": "Update Migration Status",
+        "description": "Update or postpone migration status.",
+        "tags": [
+          "Migration"
+        ],
+        "x-server": "customer",
+        "x-caller": "native",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorageMigrationStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ChangeCoverObjectRequest": {
+        "type": "object",
+        "properties": {
+          "cover_image_key": {
+            "type": "string",
+            "description": "Swift `coverImageKey: String?`"
+          },
+          "cover_image_size": {
+            "type": "string",
+            "description": "Swift `coverImageSize: UInt64?`"
+          }
+        }
+      },
+      "CompleteUploadRequest": {
+        "type": "object",
+        "properties": {
+          "cover_image_key": {
+            "type": "string",
+            "description": "Swift `coverImageKey: String?`"
+          },
+          "cover_image_size": {
+            "type": "string",
+            "description": "Swift `coverImageSize: UInt64?`"
+          }
+        }
+      },
+      "CreateFolderRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Swift `name: String`"
+          },
+          "parent_object_id": {
+            "type": "string",
+            "description": "Swift `parentObjectId: String`"
+          }
+        },
+        "required": [
+          "name",
+          "parent_object_id"
+        ]
+      },
+      "DeleteObjectsRequest": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "description": "Swift `accessToken: String`"
+          },
+          "deviceId": {
+            "type": "string",
+            "description": "Swift `deviceId: String`"
+          },
+          "ssoId": {
+            "type": "string",
+            "description": "Swift `ssoId: String`"
+          },
+          "objectIds": {
+            "type": "string",
+            "description": "Swift `objectIds: [String]`"
+          }
+        },
+        "required": [
+          "accessToken",
+          "deviceId",
+          "ssoId",
+          "objectIds"
+        ]
+      },
+      "EmptyTrashObjectsRequest": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "description": "Swift `accessToken: String`"
+          },
+          "deviceId": {
+            "type": "string",
+            "description": "Swift `deviceId: String`"
+          },
+          "ssoId": {
+            "type": "string",
+            "description": "Swift `ssoId: String`"
+          },
+          "objectIds": {
+            "type": "string",
+            "description": "Swift `objectIds: [String]`"
+          }
+        },
+        "required": [
+          "accessToken",
+          "deviceId",
+          "ssoId",
+          "objectIds"
+        ]
+      },
+      "GetObjectWithPreSignURLRequest": {
+        "type": "object",
+        "properties": {
+          "presignUrl": {
+            "type": "string",
+            "description": "Swift `presignUrl: Bool`"
+          }
+        },
+        "required": [
+          "presignUrl"
+        ]
+      },
+      "GetObjectsByCategoryRequest": {
+        "type": "object",
+        "properties": {
+          "skip": {
+            "type": "string",
+            "description": "Swift `skip: Int`"
+          },
+          "take": {
+            "type": "string",
+            "description": "Swift `take: Int`"
+          },
+          "category": {
+            "type": "string",
+            "description": "Swift `category: String`"
+          },
+          "order": {
+            "type": "string",
+            "description": "Swift `order: SortingOrder`"
+          }
+        },
+        "required": [
+          "skip",
+          "take",
+          "category",
+          "order"
+        ]
+      },
+      "GetSearchObjectsByCategoryRequest": {
+        "type": "object",
+        "properties": {
+          "skip": {
+            "type": "string",
+            "description": "Swift `skip: Int`"
+          },
+          "take": {
+            "type": "string",
+            "description": "Swift `take: Int`"
+          },
+          "category": {
+            "type": "string",
+            "description": "Swift `category: String`"
+          },
+          "order": {
+            "type": "string",
+            "description": "Swift `order: SortingOrder`"
+          },
+          "name": {
+            "type": "string",
+            "description": "Swift `name: String`"
+          }
+        },
+        "required": [
+          "skip",
+          "take",
+          "category",
+          "order",
+          "name"
+        ]
+      },
+      "GetRecentUploadRequest": {
+        "type": "object",
+        "properties": {
+          "skip": {
+            "type": "string",
+            "description": "Swift `skip: Int`"
+          },
+          "take": {
+            "type": "string",
+            "description": "Swift `take: Int`"
+          },
+          "order": {
+            "type": "string",
+            "description": "Swift `order: SortingOrder`"
+          }
+        },
+        "required": [
+          "skip",
+          "take",
+          "order"
+        ]
+      },
+      "GetSearchRecentUploadRequest": {
+        "type": "object",
+        "properties": {
+          "skip": {
+            "type": "string",
+            "description": "Swift `skip: Int`"
+          },
+          "take": {
+            "type": "string",
+            "description": "Swift `take: Int`"
+          },
+          "order": {
+            "type": "string",
+            "description": "Swift `order: SortingOrder`"
+          },
+          "name": {
+            "type": "string",
+            "description": "Swift `name: String`"
+          }
+        },
+        "required": [
+          "skip",
+          "take",
+          "order",
+          "name"
+        ]
+      },
+      "GetSearchStorageObjectsRequest": {
+        "type": "object",
+        "properties": {
+          "skip": {
+            "type": "string",
+            "description": "Swift `skip: Int`"
+          },
+          "take": {
+            "type": "string",
+            "description": "Swift `take: Int`"
+          },
+          "order": {
+            "type": "string",
+            "description": "Swift `order: SortingOrder`"
+          },
+          "name": {
+            "type": "string",
+            "description": "Swift `name: String`"
+          }
+        },
+        "required": [
+          "skip",
+          "take",
+          "order",
+          "name"
+        ]
+      },
+      "GetStorageObjectsRequest": {
+        "type": "object",
+        "properties": {
+          "skip": {
+            "type": "string",
+            "description": "Swift `skip: Int`"
+          },
+          "take": {
+            "type": "string",
+            "description": "Swift `take: Int`"
+          },
+          "order": {
+            "type": "string",
+            "description": "Swift `order: SortingOrder`"
+          }
+        },
+        "required": [
+          "skip",
+          "take",
+          "order"
+        ]
+      },
+      "GetTrashObjectsRequest": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "description": "Swift `accessToken: String`"
+          },
+          "deviceId": {
+            "type": "string",
+            "description": "Swift `deviceId: String`"
+          },
+          "ssoId": {
+            "type": "string",
+            "description": "Swift `ssoId: String`"
+          },
+          "skip": {
+            "type": "string",
+            "description": "Swift `skip: Int`"
+          },
+          "take": {
+            "type": "string",
+            "description": "Swift `take: Int`"
+          },
+          "order": {
+            "type": "string",
+            "description": "Swift `order: SortingOrder`"
+          }
+        },
+        "required": [
+          "accessToken",
+          "deviceId",
+          "ssoId",
+          "skip",
+          "take",
+          "order"
+        ]
+      },
+      "InitialUploadRequest": {
+        "type": "object",
+        "properties": {
+          "parent_object_id": {
+            "type": "string",
+            "description": "Swift `parentObjectId: String`"
+          },
+          "name": {
+            "type": "string",
+            "description": "Swift `name: String`"
+          },
+          "mime_type": {
+            "type": "string",
+            "description": "Swift `mimeType: String`"
+          },
+          "size": {
+            "type": "string",
+            "description": "Swift `size: UInt64`"
+          }
+        },
+        "required": [
+          "parent_object_id",
+          "name",
+          "mime_type",
+          "size"
+        ]
+      },
+      "RestoreObjectsRequest": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "description": "Swift `accessToken: String`"
+          },
+          "deviceId": {
+            "type": "string",
+            "description": "Swift `deviceId: String`"
+          },
+          "ssoId": {
+            "type": "string",
+            "description": "Swift `ssoId: String`"
+          },
+          "objectIds": {
+            "type": "string",
+            "description": "Swift `objectIds: [String]`"
+          }
+        },
+        "required": [
+          "accessToken",
+          "deviceId",
+          "ssoId",
+          "objectIds"
+        ]
+      },
+      "StorageInfoRequest": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "Swift `userId: String`"
+          }
+        },
+        "required": [
+          "userId"
+        ]
+      },
+      "UpdateMigrationStatusRequest": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Swift `status: DataMigrationStatus`"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "UpdateSharedFileConfig": {
+        "type": "object",
+        "properties": {
+          "is_private": {
+            "type": "string",
+            "description": "Swift `isPrivate: Bool?`"
+          },
+          "password": {
+            "type": "string",
+            "description": "Swift `password: String?`"
+          },
+          "is_new_password": {
+            "type": "string",
+            "description": "Swift `isNewPassword: Bool?`"
+          },
+          "expire_at": {
+            "type": "string",
+            "description": "Swift `expireAt: String?`"
+          }
+        }
+      },
+      "CopyObjectResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Swift `code: Int`"
+          },
+          "message": {
+            "type": "string",
+            "description": "Swift `message: String`"
+          },
+          "platform_module": {
+            "type": "string",
+            "description": "Swift `platformModule: Int`"
+          },
+          "report_dashboard": {
+            "type": "string",
+            "description": "Swift `reportDashboard: Int`"
+          },
+          "data": {
+            "type": "string",
+            "description": "Swift `data: [CopyObjectData]`"
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "platform_module",
+          "report_dashboard",
+          "data"
+        ]
+      },
+      "CopyObjectData": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Swift `id: String?`"
+          },
+          "parent_object_id": {
+            "type": "string",
+            "description": "Swift `parentObjectId: String`"
+          },
+          "name": {
+            "type": "string",
+            "description": "Swift `name: String?`"
+          },
+          "shared_object_id": {
+            "type": "string",
+            "description": "Swift `sharedObjectId: String?`"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "Swift `updatedAt: String?`"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Swift `createdAt: String?`"
+          }
+        },
+        "required": [
+          "parent_object_id"
+        ]
+      },
+      "DataUsageResponseStatus": {
+        "type": "string",
+        "enum": [
+          "ALMOST_FULL",
+          "AVAILABLE"
+        ]
+      },
+      "DataUsageResponse": {
+        "type": "object",
+        "properties": {
+          "audio": {
+            "type": "string",
+            "description": "Swift `audio: UInt64`"
+          },
+          "contacts": {
+            "type": "string",
+            "description": "Swift `contact: UInt64`"
+          },
+          "images": {
+            "type": "string",
+            "description": "Swift `image: UInt64`"
+          },
+          "videos": {
+            "type": "string",
+            "description": "Swift `video: UInt64`"
+          },
+          "others": {
+            "type": "string",
+            "description": "Swift `other: UInt64`"
+          },
+          "total": {
+            "type": "string",
+            "description": "Swift `totalUsage: UInt64`"
+          },
+          "usage_percent": {
+            "type": "string",
+            "description": "Swift `usagePercent: Double`"
+          },
+          "status": {
+            "type": "string",
+            "description": "Swift `status: DataUsageResponseStatus`"
+          }
+        },
+        "required": [
+          "audio",
+          "contacts",
+          "images",
+          "videos",
+          "others",
+          "total",
+          "usage_percent",
+          "status"
+        ]
+      },
+      "DeleteObjectsResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Swift `code: Int?`"
+          },
+          "message": {
+            "type": "string",
+            "description": "Swift `message: String?`"
+          },
+          "data": {
+            "type": "string",
+            "description": "Swift `data: DeleteObjectsData`"
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "DeleteObjectsData": {
+        "type": "object",
+        "properties": {
+          "deleted": {
+            "type": "string",
+            "description": "Swift `deleted: String`"
+          }
+        },
+        "required": [
+          "deleted"
+        ]
+      },
+      "InitialUploadResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Swift `code: Int?`"
+          },
+          "message": {
+            "type": "string",
+            "description": "Swift `message: String?`"
+          },
+          "data": {
+            "type": "string",
+            "description": "Swift `data: InitialUploadData`"
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "InitialUploadData": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Swift `id: String`"
+          },
+          "object_type": {
+            "type": "string",
+            "description": "Swift `objectType: StorageObjectType`"
+          },
+          "parent_object_id": {
+            "type": "string",
+            "description": "Swift `parentObjectId: String?`"
+          },
+          "name": {
+            "type": "string",
+            "description": "Swift `name: String`"
+          },
+          "mime_type": {
+            "type": "string",
+            "description": "Swift `mimeType: String?`"
+          },
+          "category": {
+            "type": "string",
+            "description": "Swift `category: FileCategory?`"
+          },
+          "size": {
+            "type": "string",
+            "description": "Swift `size: UInt64`"
+          },
+          "is_uploaded": {
+            "type": "string",
+            "description": "Swift `isUploaded: Bool`"
+          }
+        },
+        "required": [
+          "id",
+          "object_type",
+          "name",
+          "size",
+          "is_uploaded"
+        ]
+      },
+      "MediaObjectResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Swift `code: Int?`"
+          },
+          "message": {
+            "type": "string",
+            "description": "Swift `message: String?`"
+          },
+          "platformModule": {
+            "type": "string",
+            "description": "Swift `platformModule: Int?`"
+          },
+          "reportDashboard": {
+            "type": "string",
+            "description": "Swift `reportDashboard: Int?`"
+          },
+          "data": {
+            "type": "string",
+            "description": "Swift `data: MediaObjectData`"
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "MediaObjectData": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Swift `id: String?`"
+          },
+          "file_url": {
+            "type": "string",
+            "description": "Swift `fileUrl: String?`"
+          }
+        }
+      },
+      "MoveObjectResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Swift `code: Int?`"
+          },
+          "message": {
+            "type": "string",
+            "description": "Swift `message: String?`"
+          },
+          "platform_module": {
+            "type": "string",
+            "description": "Swift `platformModule: Int?`"
+          },
+          "report_dashboard": {
+            "type": "string",
+            "description": "Swift `reportDashboard: Int?`"
+          },
+          "data": {
+            "type": "string",
+            "description": "Swift `data: MoveObjectData`"
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "MoveObjectData": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "string",
+            "description": "Swift `count: Int?`"
+          }
+        }
+      },
+      "RemoveObjectsToTrashResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Swift `code: Int?`"
+          },
+          "message": {
+            "type": "string",
+            "description": "Swift `message: String?`"
+          },
+          "data": {
+            "type": "string",
+            "description": "Swift `data: RemoveObjectsToTrashData`"
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "RemoveObjectsToTrashData": {
+        "type": "object",
+        "properties": {
+          "updated": {
+            "type": "string",
+            "description": "Swift `updated: String`"
+          }
+        },
+        "required": [
+          "updated"
+        ]
+      },
+      "RestoreObjectsResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Swift `code: Int?`"
+          },
+          "message": {
+            "type": "string",
+            "description": "Swift `message: String?`"
+          },
+          "data": {
+            "type": "string",
+            "description": "Swift `data: RestoreObjectsData`"
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "RestoreObjectsData": {
+        "type": "object",
+        "properties": {
+          "updated": {
+            "type": "string",
+            "description": "Swift `updated: String`"
+          }
+        },
+        "required": [
+          "updated"
+        ]
+      },
+      "SecureTokenServiceResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Swift `code: Int?`"
+          },
+          "message": {
+            "type": "string",
+            "description": "Swift `message: String?`"
+          },
+          "data": {
+            "type": "string",
+            "description": "Swift `data: SecureTokenServiceData`"
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "SecureTokenServiceData": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "description": "Swift `accessToken: String`"
+          },
+          "secret_key": {
+            "type": "string",
+            "description": "Swift `secretKey: String`"
+          },
+          "session_key": {
+            "type": "string",
+            "description": "Swift `sessionKey: String`"
+          },
+          "endpoint": {
+            "type": "string",
+            "description": "Swift `endpoint: String`"
+          },
+          "expires_at": {
+            "type": "string",
+            "description": "Swift `expiresAt: Date?`"
+          }
+        },
+        "required": [
+          "access_token",
+          "secret_key",
+          "session_key",
+          "endpoint"
+        ]
+      },
+      "ShareFileResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Swift `code: Int?`"
+          },
+          "message": {
+            "type": "string",
+            "description": "Swift `message: String?`"
+          },
+          "platform_module": {
+            "type": "string",
+            "description": "Swift `platformModule: Int?`"
+          },
+          "report_dashboard": {
+            "type": "string",
+            "description": "Swift `reportDashboard: Int?`"
+          },
+          "data": {
+            "type": "string",
+            "description": "Swift `data: ShareFileData`"
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "ShareFileData": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Swift `id: String?`"
+          },
+          "is_private": {
+            "type": "string",
+            "description": "Swift `isPrivate: Bool?`"
+          },
+          "password": {
+            "type": "string",
+            "description": "Swift `password: String?`"
+          },
+          "expire_at": {
+            "type": "string",
+            "description": "Swift `expireAt: Date?`"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "Swift `updatedAt: Date?`"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Swift `createdAt: Date?`"
+          },
+          "shared_url": {
+            "type": "string",
+            "description": "Swift `sharedURL: String?`"
+          }
+        }
+      },
+      "SharedObjectLoginResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Swift `code: Int?`"
+          },
+          "message": {
+            "type": "string",
+            "description": "Swift `message: String?`"
+          },
+          "data": {
+            "type": "string",
+            "description": "Swift `data: SharedObjectLoginData`"
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "SharedObjectLoginData": {
+        "type": "object",
+        "properties": {
+          "shared_object_access_token": {
+            "type": "string",
+            "description": "Swift `sharedObjectAccessToken: String?`"
+          }
+        }
+      },
+      "SharedObjectResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Swift `code: Int?`"
+          },
+          "message": {
+            "type": "string",
+            "description": "Swift `message: String?`"
+          },
+          "data": {
+            "type": "string",
+            "description": "Swift `data: SharedObjectData`"
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "SharedObjectData": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Swift `id: String?`"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "Swift `updatedAt: String?`"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Swift `createdAt: String?`"
+          },
+          "object": {
+            "type": "string",
+            "description": "Swift `object: SharedObject?`"
+          }
+        }
+      },
+      "SharedObject": {
+        "type": "object",
+        "properties": {
+          "file_url": {
+            "type": "string",
+            "description": "Swift `fileUrl: String?`"
+          },
+          "id": {
+            "type": "string",
+            "description": "Swift `id: String?`"
+          },
+          "object_type": {
+            "type": "string",
+            "description": "Swift `objectType: String?`"
+          },
+          "category": {
+            "type": "string",
+            "description": "Swift `category: FileCategory?`"
+          },
+          "cover_image_key": {
+            "type": "string",
+            "description": "Swift `coverImageKey: String?`"
+          },
+          "mime_type": {
+            "type": "string",
+            "description": "Swift `mimeType: String?`"
+          },
+          "name": {
+            "type": "string",
+            "description": "Swift `name: String?`"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "Swift `updatedAt: String?`"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Swift `createdAt: String?`"
+          }
+        }
+      },
+      "StorageInfoResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Swift `code: Int?`"
+          },
+          "message": {
+            "type": "string",
+            "description": "Swift `message: String?`"
+          },
+          "data": {
+            "type": "string",
+            "description": "Swift `data: StorageInfoData?`"
+          }
+        }
+      },
+      "StorageInfoData": {
+        "type": "object",
+        "properties": {
+          "quota_size": {
+            "type": "string",
+            "description": "Swift `totalCapacity: UInt64`"
+          },
+          "data_usage": {
+            "type": "string",
+            "description": "Swift `dataUsage: DataUsageResponse?`"
+          },
+          "root_folder": {
+            "type": "string",
+            "description": "Swift `rootFolder: StorageObjectData?`"
+          },
+          "data_migration": {
+            "type": "string",
+            "description": "Swift `migration: StorageMigrationData?`"
+          }
+        },
+        "required": [
+          "quota_size"
+        ]
+      },
+      "StorageMigrationData": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Swift `status: DataMigrationStatus?`"
+          },
+          "estimated_time_to_complete": {
+            "type": "string",
+            "description": "Swift `estimateTimeToComplete: Date?`"
+          },
+          "failed_display_time": {
+            "type": "string",
+            "description": "Swift `failedDisplayTime: Int?`"
+          },
+          "expires_at": {
+            "type": "string",
+            "description": "Swift `expiresAt: Date?`"
+          }
+        }
+      },
+      "StorageMigrationStatusResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Swift `code: Int?`"
+          },
+          "message": {
+            "type": "string",
+            "description": "Swift `message: String?`"
+          },
+          "data": {
+            "type": "string",
+            "description": "Swift `data: StorageMigrationStatusData`"
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "StorageMigrationStatusData": {
+        "type": "object",
+        "properties": {
+          "migration": {
+            "type": "string",
+            "description": "Swift `migration: StorageMigrationData?`"
+          }
+        }
+      },
+      "StorageObjectListResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Swift `code: Int?`"
+          },
+          "message": {
+            "type": "string",
+            "description": "Swift `message: String?`"
+          },
+          "data": {
+            "type": "string",
+            "description": "Swift `data: StorageObjectListData`"
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "StorageObjectListData": {
+        "type": "object",
+        "properties": {
+          "info": {
+            "type": "string",
+            "description": "Swift `info: InfoResponse?`"
+          },
+          "data_usage": {
+            "type": "string",
+            "description": "Swift `dataUsage: DataUsageResponse?`"
+          },
+          "uploaded": {
+            "type": "string",
+            "description": "Swift `uploaded: [StorageObjectData]?`"
+          },
+          "uploading": {
+            "type": "string",
+            "description": "Swift `uploading: [StorageObjectData]?`"
+          },
+          "folders": {
+            "type": "string",
+            "description": "Swift `folders: [FolderObjectModel]`"
+          },
+          "items": {
+            "type": "string",
+            "description": "Swift `items: [FileObjectModel]`"
+          },
+          "files": {
+            "type": "string",
+            "description": "Swift `files: [FileObjectModel]`"
+          }
+        },
+        "required": [
+          "folders",
+          "items",
+          "files",
+          "items"
+        ]
+      },
+      "StorageObjectResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Swift `code: Int?`"
+          },
+          "message": {
+            "type": "string",
+            "description": "Swift `message: String?`"
+          },
+          "data": {
+            "type": "string",
+            "description": "Swift `data: StorageObjectData`"
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "StorageObjectData": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Swift `id: String`"
+          },
+          "parent_object_id": {
+            "type": "string",
+            "description": "Swift `parentObjectId: String?`"
+          },
+          "object_type": {
+            "type": "string",
+            "description": "Swift `objectType: StorageObjectType`"
+          },
+          "name": {
+            "type": "string",
+            "description": "Swift `name: String`"
+          },
+          "category": {
+            "type": "string",
+            "description": "Swift `category: FileCategory?`"
+          },
+          "size": {
+            "type": "string",
+            "description": "Swift `size: UInt64?`"
+          },
+          "mime_type": {
+            "type": "string",
+            "description": "Swift `mimeType: String?`"
+          },
+          "cover_image_key": {
+            "type": "string",
+            "description": "Swift `coverImageId: String?`"
+          },
+          "cover_image_size": {
+            "type": "string",
+            "description": "Swift `coverImageSize: UInt64?`"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "Swift `updatedAt: Date?`"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Swift `createdAt: Date?`"
+          },
+          "delete_in": {
+            "type": "string",
+            "description": "Swift `deleteIn: Date?`"
+          },
+          "shared_object": {
+            "type": "string",
+            "description": "Swift `sharedObject: StorageSharedObject?`"
+          }
+        },
+        "required": [
+          "id",
+          "object_type",
+          "name"
+        ]
+      },
+      "InfoResponse": {
+        "type": "object",
+        "properties": {
+          "number_of_files": {
+            "type": "string",
+            "description": "Swift `numberOfFiles: Int`"
+          }
+        },
+        "required": [
+          "number_of_files"
+        ]
+      },
+      "StorageSharedObject": {
+        "type": "object",
+        "properties": {
+          "is_private": {
+            "type": "string",
+            "description": "Swift `isPrivate: Bool`"
+          }
+        },
+        "required": [
+          "is_private"
+        ]
+      },
+      "TrashObjectListResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Swift `code: Int?`"
+          },
+          "message": {
+            "type": "string",
+            "description": "Swift `message: String?`"
+          },
+          "data": {
+            "type": "string",
+            "description": "Swift `data: TrashObjectListData`"
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "TrashObjectListData": {
+        "type": "object",
+        "properties": {
+          "uploaded": {
+            "type": "string",
+            "description": "Swift `uploaded: [StorageObjectData]`"
+          }
+        },
+        "required": [
+          "uploaded"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
